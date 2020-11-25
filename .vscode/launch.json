@@ -1,0 +1,76 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "jlink",
+            "cwd": "${workspaceRoot}",
+            "executable": "./_build/nrf52832_xxaa.out",
+            "name": "Debug (J-Link)",
+            "device": "nrf52832_xxaa",
+            "interface": "swd"
+        },
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "./pca10040/s132/armgcc/_build/nrf52832_xxaa.out",
+            "name": "openocd",
+            "device": "nrf52832_xxaa",
+            "svdFile": "C:/Programs/ARM/NordicSemiconductor/nrf52.svd",
+            "configFiles": [
+                "./interface/stlink.cfg", "./target/nrf52.cfg"
+            ]
+        },
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stutil",
+            "cwd": "${workspaceRoot}",
+            "executable": "${file}",
+            "name": "Debug (ST-Util)",
+            "device": "STM32F103C8",
+            "v1": false
+        },
+        {
+            "name": "Arduino",
+            "type": "arduino",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "targetArchitecture": "arm",
+            "miDebuggerPath": "C:/Users/akv.CYMPAK/AppData/Local/Arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin/arm-none-eabi-gdb.exe",
+            "debugServerPath": "C:/Programs/Radio/OpenOCD/bin/openocd.exe",
+            "debugServerArgs": "-f interface/stlink.cfg -f target/stm32f1x.cfg",
+            //"svdFile": "C:\\Programs\\Radio\\Keil_v5\\ARM\\Packs\\Keil\\STM32F1xx_DFP\\2.3.0\\SVD\\STM32F103xx.svd",
+            "customLaunchSetupCommands": [
+                {
+                    "text": "target remote localhost:3333"
+                },
+                {
+                    "text": "file \"${file}\""
+                },
+                {
+                    "text": "load"
+                },
+                {
+                    "text": "monitor reset halt"
+                },
+                {
+                    "text": "monitor reset init"
+                }
+            ],
+            "stopAtEntry": true,
+            "serverStarted": "Info\\ :\\ [\\w\\d\\.]*:\\ hardware",
+            "launchCompleteCommand": "exec-continue",
+            "filterStderr": true,
+            "args": []
+        }
+    ]
+}
